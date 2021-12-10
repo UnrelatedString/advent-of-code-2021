@@ -3,9 +3,9 @@ import sys
 ls = [l for l in iter(input,'')]#sys.stdin]
 #ns = [n for n in eval(input())]#OPTIONS
 
-s = 0
+s = []
 c = dict(zip('{[(<','}])>'))
-ss = {')':3,']':57,'}':1197,'>':25137}
+ss = {')':1,']':2,'}':3,'>':4}
 for l in ls:
     bs = []
     for b in l:
@@ -14,7 +14,8 @@ for l in ls:
         elif not bs:
             break
         elif bs.pop() != b:
-            s += ss[b]
             break
+    else:
+        s.append(int(''.join(str(ss[x]) for x in bs[::-1]),base=5))
 
-print(s)
+print(sorted(s)[len(s)//2])

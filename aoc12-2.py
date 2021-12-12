@@ -11,18 +11,19 @@ for l in ls:
     cs[a].add(b)
     cs[b].add(a)
 
-ps = [('start',())]
+ps = {('start',)}
 while True:
-    nps = []
-    for c,v in ps:
+    nps = set()
+    for v in ps:
+        c = v[-1]
         if c == 'end':
-            nps.append((c,v))
+            nps.add(v)
             continue
         for d in cs[c]:
-            if d not in v or d.lower()!=d:
-                nps.append((d,v+(c,)))
+            if (d not in v or all(v.count(x)==1 for x in v if x==x.lower()) or d.lower()!=d) and d != 'start':
+                nps.add(v+(d,))
     if nps == ps:
         break
     ps = nps
-
-print(len({*ps}))
+for p in ps:print(p)
+print(len(ps))

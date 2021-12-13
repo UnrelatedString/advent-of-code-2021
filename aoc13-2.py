@@ -9,7 +9,7 @@ fs = lines()
 
 for f in fs: #lol
     f = f[11:]
-    a = 1j**(f[0]=='y')
+    a = (-1j)**(f[0]=='y')
     n = int(f[2:])
     nps = set()
     for p in ps:
@@ -22,5 +22,11 @@ for f in fs: #lol
         p /= a
         nps.add(p)
     ps = nps
+
+mx,my = map(max,zip(*map(c_t,ps)))
+for y in range(int(my)+1):
+    for x in range(int(mx)+1):
+        print(end='.#'[complex(x,y) in ps])
+    print()
 
 print(len(ps))

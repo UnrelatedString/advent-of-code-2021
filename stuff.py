@@ -1,5 +1,9 @@
 import re
 import itertools as itr
+import collections
+
+dd = collections.defaultdict
+cr = collections.Counter
 
 def lines():
     return [*iter(input,'')]

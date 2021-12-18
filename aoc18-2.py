@@ -72,14 +72,18 @@ def mag(l):
         return 3*mag(a) + 2*mag(b)
     return l[0]
 
-ns = [wrap(eval(l)) for l in ls]
-s = ns[0]
-for n in ns[1:]:
-    s = [s,n]
+def add(a,b):
+    s = [a,b]
     while True:
         if reds(s, [], 0) is None:
             if splis(s) is None:
                 break
-    #print(unwrap(s))
+    return s
 
-print(mag(s))
+r = 0
+for n in ls:
+    for m in ls:
+        if n == m: continue
+        r = max(r, mag(add(wrap(eval(n)),wrap(eval(m)))))
+
+print(r)

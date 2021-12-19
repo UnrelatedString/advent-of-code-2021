@@ -31,21 +31,21 @@ def rotn(v, a, b):
     ][b]
 
 um = {*ss} - {0}
-m = [ss[0]]
+m = [(ss[0],(0,0,0))]
 
 def l():
     for u in um:
         for a in range(4):
             for b in range(6):
                 cs = [rotn(t, a, b) for t in ss[u]]
-                for s in m:
+                for s,co in m:
                     for p in s:
                         for r in cs:
                             d = st(p, r)
                             o = {at(d, c) for c in cs}
                             i = o & s
                             if len(i) >= 12:
-                                m.append(o)
+                                m.append((o,d))
                                 um.remove(u)
                                 return u
 
@@ -56,4 +56,10 @@ while um:
     else:
         print('what the fuck')
 
-print(len(set.union(*m)))
+md = 0
+for _,a in m:
+    for _,b in m:
+        d = sum(map(abs,st(a,b)))
+        print(a,b,d)
+        md = max(md,d)
+print(md)

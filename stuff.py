@@ -27,4 +27,4 @@ def bidict(d):
         ret[v].add(k)
 
 def slices(l,n):
-    return [l[i:i+n] for i in range(len(ls)-n+1)]
+    return [l[i:i+n] for i in range(len(l)-n+1)]

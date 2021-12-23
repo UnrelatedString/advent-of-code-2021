@@ -4,12 +4,16 @@ import heapq as hq
 
 ls = lines()#chunks()#nums()
 
-#thank fuck for this not being a maze
-rs = tuple(r[::-1] for r in zip(*(l[3:10:2] for l in ls[2:4])))
+ls[3:3] = '''  #D#C#B#A#
+  #D#B#A#C#'''.split('\n')
+# ls[3:3] = ['  #A#B#C#D#']*2
 
+#thank fuck for this not being a maze
+rs = tuple(r[::-1] for r in zip(*(l[3:10:2] for l in ls[2:6])))
+#print(rs)
 ss = ('',)*11 #11 over 7 for less special casing distance calculations
 
-full_room = 2 #since i know what part 2 is
+full_room = 4
 
 def li(c):
     return 'ABCD'.find(c)
@@ -25,7 +29,7 @@ def between(ss, *cs):
 
 empty_space = '' #thanks heapq
 
-goal = ((('A','A'),('B','B'),('C','C'),('D','D')),(empty_space,)*11)
+goal = ((('A','A','A','A'),('B','B','B','B'),('C','C','C','C'),('D','D','D','D')),(empty_space,)*11)
 
 es = {(rs,ss): 0}
 uv = [(0, (rs,ss))]
@@ -54,6 +58,8 @@ def visit(state):
         gr = rs[gi]
         if len(gr) == full_room:
             continue
+        if not all(b == a for b in gr):
+            continue
         if any(between(ss, r_s(i), r_s(gi))):
             continue
         e = abs(r_s(i) - r_s(gi))
@@ -72,6 +78,8 @@ def visit(state):
         gr = rs[gi]
         if len(gr) == full_room:
             continue
+        if not all(b == s for b in gr):
+            continue
         if any(between(ss, i, r_s(gi))):
             continue
         e = abs(i - r_s(gi))
@@ -88,7 +96,7 @@ def visit(state):
             continue
         a = r[-1]
         gi = li(a)
-        if i == gi:
+        if i == gi and all(b == a for b in r): #cannot believe i forgot to look at the second room
             continue
         for j,s in enumerate(ss):
             if s:
@@ -108,8 +116,11 @@ def visit(state):
 
 while uv:
     _, state = hq.heappop(uv)
+    #print(state)
     if state == goal:
         break
     visit(state)
+else:
+    print()
 
 print(es[goal])
